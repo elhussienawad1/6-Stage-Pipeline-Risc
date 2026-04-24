@@ -1,0 +1,7 @@
+# Compile of dff.vhd was successful.
+# Compile of memory.vhd was successful.
+# Compile of memory_array.vhd was successful.
+# Compile of reg.vhd was successful.
+# Compile of tb_memory.vhd was successful.
+# Compile of tb_memory_array.vhd was successful.
+# 6 compiles, 0 failed with no errors.

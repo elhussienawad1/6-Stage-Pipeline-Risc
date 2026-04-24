@@ -177,6 +177,49 @@ R27
 !i113 1
 R11
 R12
+Ereg_file
+Z28 w1777047960
+R13
+R1
+R2
+!i122 6
+R3
+Z29 8C:/Users/hussi/6-Stage-Pipeline-Risc/register_file.vhd
+Z30 FC:/Users/hussi/6-Stage-Pipeline-Risc/register_file.vhd
+l0
+L5 1
+VBiA0mcm:7Yce0JUC_lb>93
+!s100 [ET@D5@L28zjJF5QL`n6L3
+R6
+32
+Z31 !s110 1777047965
+!i10b 1
+Z32 !s108 1777047965.000000
+Z33 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/hussi/6-Stage-Pipeline-Risc/register_file.vhd|
+!s107 C:/Users/hussi/6-Stage-Pipeline-Risc/register_file.vhd|
+!i113 1
+R11
+R12
+Astructure
+R13
+R1
+R2
+DEx4 work 8 reg_file 0 22 BiA0mcm:7Yce0JUC_lb>93
+!i122 6
+l22
+L17 29
+Vz5]e^CNe_hTAH6N0e`nZL3
+!s100 `]D;1U]iC[8^58d:PKB<]3
+R6
+32
+R31
+!i10b 1
+R32
+R33
+Z34 !s107 C:/Users/hussi/6-Stage-Pipeline-Risc/register_file.vhd|
+!i113 1
+R11
+R12
 Etb_memory
 R0
 R13
@@ -184,8 +227,8 @@ R1
 R2
 !i122 4
 R3
-Z28 8C:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory.vhd
-Z29 FC:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory.vhd
+Z35 8C:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory.vhd
+Z36 FC:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory.vhd
 l0
 L5 1
 V[BSgOI;g:bC<F<hR4IY=_2
@@ -195,8 +238,8 @@ R6
 R20
 !i10b 1
 R25
-Z30 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory.vhd|
-Z31 !s107 C:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory.vhd|
+Z37 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory.vhd|
+Z38 !s107 C:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory.vhd|
 !i113 1
 R11
 R12
@@ -207,7 +250,7 @@ R2
 DEx4 work 9 tb_memory 0 22 [BSgOI;g:bC<F<hR4IY=_2
 !i122 4
 l28
-Z32 L8 80
+Z39 L8 80
 V]GXX;fFAVOZil_ckY4LgE2
 !s100 :P9SDSY?_S;mDV2aO4M861
 R6
@@ -215,8 +258,8 @@ R6
 R20
 !i10b 1
 R25
-R30
-R31
+R37
+R38
 !i113 1
 R11
 R12
@@ -227,8 +270,8 @@ R1
 R2
 !i122 5
 R3
-Z33 8C:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory_array.vhd
-Z34 FC:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory_array.vhd
+Z40 8C:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory_array.vhd
+Z41 FC:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory_array.vhd
 l0
 L5 1
 V_l^:?9T]K>Ljh]k>iG>gh0
@@ -238,8 +281,8 @@ R6
 R20
 !i10b 1
 R25
-Z35 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory_array.vhd|
-!s107 C:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory_array.vhd|
+Z42 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory_array.vhd|
+Z43 !s107 C:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory_array.vhd|
 !i113 1
 R11
 R12
@@ -250,7 +293,7 @@ R2
 DEx4 work 15 tb_memory_array 0 22 _l^:?9T]K>Ljh]k>iG>gh0
 !i122 5
 l28
-R32
+R39
 V_g3PSTf@_>UEYbH4Pi08f2
 !s100 A1gk<V1Pd>?cC1ZD]3FI<2
 R6
@@ -258,8 +301,8 @@ R6
 R20
 !i10b 1
 R25
-R35
-Z36 !s107 C:/Users/hussi/OneDrive/Desktop/labs/reg_file/tb_memory_array.vhd|
+R42
+R43
 !i113 1
 R11
 R12

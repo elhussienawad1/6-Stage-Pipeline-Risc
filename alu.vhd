@@ -12,7 +12,7 @@ entity alu is
     );
 end alu;
 
-architecture arch of alu is
+architecture a_alu of alu is
     COMPONENT carry_select_adder IS
         GENERIC (n : integer := 32);
         PORT(
@@ -55,4 +55,4 @@ architecture arch of alu is
 
         result<=result_temp;
      
-end arch ;
+end a_alu;

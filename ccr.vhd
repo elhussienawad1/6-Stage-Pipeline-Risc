@@ -21,7 +21,7 @@ entity CCR is
     );
 end CCR;
 
-architecture Behavioral of CCR is
+architecture a_ccr of CCR is
     -- Internal registers to store CCR flags
     signal Z_reg, N_reg, C_reg: std_logic;
 begin
@@ -59,4 +59,4 @@ begin
     N <= alu_N when flag_enable = '1' else N_reg;
     C <= alu_C when flag_enable = '1' else C_reg;
 
-end Behavioral;
+end a_ccr;

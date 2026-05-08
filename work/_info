@@ -1,0 +1,554 @@
+m255
+K4
+z2
+!s11e vcom 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc
+Ealu
+Z1 w1778195551
+Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
+Z3 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 22
+R0
+Z4 8alu.vhd
+Z5 Falu.vhd
+l0
+L4 1
+Vl8DYZN9cU]=iJTWUKdhi]2
+!s100 A`7MWd0il9XIS;3g?4UzH1
+Z6 OV;C;2020.1;71
+33
+Z7 !s110 1778199069
+!i10b 1
+Z8 !s108 1778199069.000000
+Z9 !s90 -reportprogress|300|-2008|alu.vhd|
+Z10 !s107 alu.vhd|
+!i113 1
+Z11 o-2008
+Z12 tExplicit 1 CvgOpt 0
+Aa_alu
+R2
+R3
+DEx4 work 3 alu 0 22 l8DYZN9cU]=iJTWUKdhi]2
+!i122 22
+l34
+L15 44
+VfPmaS]4W;UX<b8kX:]60[3
+!s100 H7ZVPBE<M?aZONh:bjilP0
+R6
+33
+R7
+!i10b 1
+R8
+R9
+R10
+!i113 1
+R11
+R12
+Ecarry_select_adder
+Z13 w1777052650
+R2
+R3
+!i122 21
+R0
+Z14 8carry_select_adder.vhd
+Z15 Fcarry_select_adder.vhd
+l0
+L4 1
+V3NKCC<mgE3EehiT>3GeiC2
+!s100 =a;dYfRVT[1k=KUDnADHC3
+R6
+33
+R7
+!i10b 1
+R8
+Z16 !s90 -reportprogress|300|-2008|carry_select_adder.vhd|
+Z17 !s107 carry_select_adder.vhd|
+!i113 1
+R11
+R12
+Aa_carry_select_adder
+R2
+R3
+DEx4 work 18 carry_select_adder 0 22 3NKCC<mgE3EehiT>3GeiC2
+!i122 21
+l27
+L14 20
+V__1R[V08zZbWUnHcf=2MS0
+!s100 bCei<1<44j@8VDCVJ0nl02
+R6
+33
+R7
+!i10b 1
+R8
+R16
+R17
+!i113 1
+R11
+R12
+Eccr
+Z18 w1778198433
+R2
+R3
+!i122 23
+R0
+Z19 8ccr.vhd
+Z20 Fccr.vhd
+l0
+L4 1
+VUSJP2e6iLTWzhaG35?:0j3
+!s100 ifQicZAZL3ZJjQ:F_nR3V2
+R6
+33
+R7
+!i10b 1
+R8
+Z21 !s90 -reportprogress|300|-2008|ccr.vhd|
+Z22 !s107 ccr.vhd|
+!i113 1
+R11
+R12
+Aa_ccr
+R2
+R3
+DEx4 work 3 ccr 0 22 USJP2e6iLTWzhaG35?:0j3
+!i122 23
+l25
+L22 28
+VOXm;?3UEEVHH2X<>WCj2O1
+!s100 LWE@_;K@0cObdOcAQHgmE1
+R6
+33
+R7
+!i10b 1
+R8
+R21
+R22
+!i113 1
+R11
+R12
+Eexecute_1
+Z23 w1778198041
+R2
+R3
+!i122 24
+R0
+Z24 8execute_1.vhd
+Z25 Fexecute_1.vhd
+l0
+L4 1
+VnNHRXYoHkLhcjdhi<jZmB2
+!s100 U0<TJKfF6egmKTLH1?A[U0
+R6
+33
+R7
+!i10b 1
+R8
+Z26 !s90 -reportprogress|300|-2008|execute_1.vhd|
+Z27 !s107 execute_1.vhd|
+!i113 1
+R11
+R12
+Aa_execute_1
+R2
+R3
+DEx4 work 9 execute_1 0 22 nNHRXYoHkLhcjdhi<jZmB2
+!i122 24
+l89
+L36 93
+VNF_8kM5lE8h1zd8cdl?2i3
+!s100 ZK3<6e5CP0S@kI_bOE]I_3
+R6
+33
+R7
+!i10b 1
+R8
+R26
+R27
+!i113 1
+R11
+R12
+Eexecute_1_tb
+Z28 w1778199053
+Z29 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+R2
+R3
+!i122 25
+R0
+Z30 8execute_1_tb.vhd
+Z31 Fexecute_1_tb.vhd
+l0
+L5 1
+VgmPWJ@_=T_c:Z773]8GmB0
+!s100 ;Z]XhO1Moozk`h=QDLBz80
+R6
+33
+R7
+!i10b 1
+R8
+Z32 !s90 -reportprogress|300|-2008|execute_1_tb.vhd|
+Z33 !s107 execute_1_tb.vhd|
+!i113 1
+R11
+R12
+Atb
+R29
+R2
+R3
+Z34 DEx4 work 12 execute_1_tb 0 22 gmPWJ@_=T_c:Z773]8GmB0
+!i122 25
+l59
+L8 332
+VJAlCh?aiE^kNd<N^OM_:S3
+!s100 T@AjkS:BOF4_]zGdT?IS52
+R6
+33
+R7
+!i10b 1
+R8
+R32
+R33
+!i113 1
+R11
+R12
+Eexecute_2
+Z35 w1777056656
+R2
+R3
+!i122 5
+R0
+Z36 8/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/execute_2.vhd
+Z37 F/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/execute_2.vhd
+l0
+L4 1
+VB8j;SI1>CCI;jRJjK8HL:0
+!s100 hnb=YIRk`m>A_FCIb@JAg1
+R6
+32
+Z38 !s110 1778198624
+!i10b 1
+Z39 !s108 1778198624.000000
+Z40 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/execute_2.vhd|
+Z41 !s107 /home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/execute_2.vhd|
+!i113 1
+Z42 o-work work -2002 -explicit
+R12
+Aa_execute_2
+R2
+R3
+DEx4 work 9 execute_2 0 22 B8j;SI1>CCI;jRJjK8HL:0
+!i122 5
+l29
+L16 43
+V0CXNf7@H9@WD5Gg7lNBVc0
+!s100 =OC?5iajnLHb;0:@<hgf33
+R6
+32
+R38
+!i10b 1
+R39
+R40
+R41
+!i113 1
+R42
+R12
+Eforwarding_unit
+Z43 w1778190607
+R2
+R3
+!i122 6
+R0
+Z44 8/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/forwarding_unit.vhd
+Z45 F/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/forwarding_unit.vhd
+l0
+L4 1
+V3ozMf8bOzd<YgL`A^9ocF2
+!s100 _;Ez:l@a^fczonOlln<[b1
+R6
+32
+R38
+!i10b 1
+R39
+Z46 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/forwarding_unit.vhd|
+Z47 !s107 /home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/forwarding_unit.vhd|
+!i113 1
+R42
+R12
+Aa_forwarding_unit
+R2
+R3
+DEx4 work 15 forwarding_unit 0 22 3ozMf8bOzd<YgL`A^9ocF2
+!i122 6
+l23
+L19 16
+V_D>SVzkm[9]69Izm@EOnS3
+!s100 D^IO9<kUc2Q0@b_T<`UR[0
+R6
+32
+R38
+!i10b 1
+R39
+R46
+R47
+!i113 1
+R42
+R12
+Eone_bit_adder
+Z48 w1777052563
+R2
+R3
+!i122 19
+R0
+Z49 8one_bit_adder.vhd
+Z50 Fone_bit_adder.vhd
+l0
+L4 1
+VWen:LKZQ@fGR^MhT63gzj3
+!s100 5Y7ANl7m0CDP3CZmL:@]R2
+R6
+33
+R7
+!i10b 1
+R8
+Z51 !s90 -reportprogress|300|-2008|one_bit_adder.vhd|
+Z52 !s107 one_bit_adder.vhd|
+!i113 1
+R11
+R12
+Aa_one_bit_adder
+R2
+R3
+DEx4 work 13 one_bit_adder 0 22 Wen:LKZQ@fGR^MhT63gzj3
+!i122 19
+l10
+L9 5
+Vn5PRH]gRAe3KP_h;@VTR63
+!s100 Q4K6XWhFCBKWiKa5KY]am2
+R6
+33
+R7
+!i10b 1
+R8
+R51
+R52
+!i113 1
+R11
+R12
+Epc
+Z53 w1777052253
+R2
+R3
+!i122 9
+R0
+Z54 8/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/pc.vhd
+Z55 F/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/pc.vhd
+l0
+L3 1
+VYNVdQ5X@kX0S`PUOQKEZK3
+!s100 8ASLQiK0?USFlnF3GHIB03
+R6
+32
+R38
+!i10b 1
+R39
+Z56 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/pc.vhd|
+Z57 !s107 /home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/pc.vhd|
+!i113 1
+R42
+R12
+Aa_pc
+R2
+R3
+DEx4 work 2 pc 0 22 YNVdQ5X@kX0S`PUOQKEZK3
+!i122 9
+l15
+L14 11
+V8CJ5FcR=8C;7d]>[_6ITG3
+!s100 WPOnM97jFkhA41QP@LeKZ1
+R6
+32
+R38
+!i10b 1
+R39
+R56
+R57
+!i113 1
+R42
+R12
+Ereg_file
+Z58 w1777048601
+R29
+R2
+R3
+!i122 10
+R0
+Z59 8/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/register_file.vhd
+Z60 F/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/register_file.vhd
+l0
+L5 1
+VBiA0mcm:7Yce0JUC_lb>93
+!s100 [ET@D5@L28zjJF5QL`n6L3
+R6
+32
+R38
+!i10b 1
+R39
+Z61 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/register_file.vhd|
+Z62 !s107 /home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/register_file.vhd|
+!i113 1
+R42
+R12
+Astructure
+R29
+R2
+R3
+DEx4 work 8 reg_file 0 22 BiA0mcm:7Yce0JUC_lb>93
+!i122 10
+l22
+L17 29
+Vz5]e^CNe_hTAH6N0e`nZL3
+!s100 `]D;1U]iC[8^58d:PKB<]3
+R6
+32
+R38
+!i10b 1
+R39
+R61
+R62
+!i113 1
+R42
+R12
+Ereg_file_memory
+Z63 w1777050261
+Z64 DPx4 ieee 16 std_logic_textio 0 22 ^l:n6VFdg74Q?CKDhjD]D3
+R29
+R2
+R3
+!i122 7
+R0
+Z65 8/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/memory.vhd
+Z66 F/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/memory.vhd
+l0
+L7 1
+V[S3J2>za3:F6@h?bEVR6D3
+!s100 hH4:H:dZhJ>5kSj>gEjEL2
+R6
+32
+R38
+!i10b 1
+R39
+Z67 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/memory.vhd|
+Z68 !s107 /home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/memory.vhd|
+!i113 1
+R42
+R12
+Astructure
+R64
+R29
+R2
+R3
+DEx4 work 15 reg_file_memory 0 22 [S3J2>za3:F6@h?bEVR6D3
+!i122 7
+l52
+L23 73
+V:?33co?UA5QejBUeQFF2z1
+!s100 Xjd>;96YhCkKR0jP[4WnQ1
+R6
+32
+R38
+!i10b 1
+R39
+R67
+R68
+!i113 1
+R42
+R12
+Eripple_adder
+Z69 w1777052633
+R2
+R3
+!i122 20
+R0
+Z70 8ripple_adder.vhd
+Z71 Fripple_adder.vhd
+l0
+L4 1
+V3nie<Y4hPJCiUVH3JX4^82
+!s100 g[9]O4MHG7?VZ_dl_1JTj2
+R6
+33
+R7
+!i10b 1
+R8
+Z72 !s90 -reportprogress|300|-2008|ripple_adder.vhd|
+Z73 !s107 ripple_adder.vhd|
+!i113 1
+R11
+R12
+Aa_ripple_adder
+R2
+R3
+DEx4 work 12 ripple_adder 0 22 3nie<Y4hPJCiUVH3JX4^82
+!i122 20
+l21
+L14 14
+Vb3zj3QSF2bo?gFnaKAz@M2
+!s100 ZCITZD6OkK>RB@AF5VnL`3
+R6
+33
+R7
+!i10b 1
+R8
+R72
+R73
+!i113 1
+R11
+R12
+Esp
+Z74 w1777051662
+R29
+R2
+R3
+!i122 12
+R0
+Z75 8/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/sp.vhd
+Z76 F/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/sp.vhd
+l0
+L5 1
+VLl@;I^h6]gAc>XaDQaSL@2
+!s100 2chdF:mPbHhacJ^zelYge0
+R6
+32
+R38
+!i10b 1
+R39
+Z77 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|/home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/sp.vhd|
+Z78 !s107 /home/moaaz/important/comp arch/project/6-Stage-Pipeline-Risc/sp.vhd|
+!i113 1
+R42
+R12
+Aa_sp
+R29
+R2
+R3
+DEx4 work 2 sp 0 22 Ll@;I^h6]gAc>XaDQaSL@2
+!i122 12
+l17
+L14 13
+VmHCYfzD9f]g@T0nFZbk0k0
+!s100 T[b5F0^0V1VW7mI`cJKcd1
+R6
+32
+R38
+!i10b 1
+R39
+R77
+R78
+!i113 1
+R42
+R12

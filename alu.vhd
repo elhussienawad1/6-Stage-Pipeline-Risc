@@ -35,7 +35,7 @@ architecture a_alu of alu is
         not_b<=not b;
         adder: carry_select_adder generic map (n) port map(a,b_temp,cin_temp,adder_output,cout_temp);
         --add uses b, sub uses not b and cin=1
-        -- add=001 sub=011
+        -- add=001 sub=011 and=100 not=010
         b_temp<=b when sel="001"
         else not_b;
 

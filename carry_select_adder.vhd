@@ -27,7 +27,7 @@ ARCHITECTURE a_carry_select_adder OF carry_select_adder IS
 BEGIN
     ra0: ripple_adder GENERIC MAP(n=>n) PORT MAP(a, b, '0', s0, c_out0);
     ra1: ripple_adder GENERIC MAP(n=>n) PORT MAP(a, b, '1', s1, c_out1);
-
+    --MUX
     s     <= s0 when c_in = '0' else s1;
     c_out <= c_out0 when c_in = '0' else c_out1;
 END a_carry_select_adder;

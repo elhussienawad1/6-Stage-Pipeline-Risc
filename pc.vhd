@@ -4,10 +4,10 @@ entity pc is
     generic (n:integer:=32);
     port(
         rst,clk: in std_logic;
-        enable: in std_logic;
+        enable: in std_logic;  --Hazard 0 -> STALL
         pc_src: in std_logic;
         d:in std_logic_vector(n-1 downto 0);
-        mem1: in std_logic_vector(n-1 downto 0);
+        mem1: in std_logic_vector(n-1 downto 0);  --in case of reset
         q:out std_logic_vector(n-1 downto 0)
     );
 end pc;

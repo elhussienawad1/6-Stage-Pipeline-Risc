@@ -10,6 +10,18 @@ architecture tb of execute_1_tb is
     constant n : integer := 32;
     constant CLK_PERIOD : time := 10 ns;
 
+    function to_hstring(slv : std_logic_vector) return string is
+        constant HEX : string(1 to 16) := "0123456789ABCDEF";
+        variable result : string(1 to slv'length / 4);
+        variable nibble : std_logic_vector(3 downto 0);
+    begin
+        for i in 0 to slv'length / 4 - 1 loop
+            nibble := slv(slv'length - 1 - i*4 downto slv'length - 4 - i*4);
+            result(i + 1) := HEX(to_integer(unsigned(nibble)) + 1);
+        end loop;
+        return result;
+    end function;
+
     component execute_1 is
         generic (n : integer := 32);
         port(
@@ -255,19 +267,19 @@ begin
         wait for CLK_PERIOD;
 
         -- =========================================================
-        -- TEST 9: ForwardB from MEM/WB (forward_b="10")
+        -- TEST 9: ForwardB from MEM/WB (forward_b="11")
         -- r_rs1(10) + forwarded(7) = 17
         -- =========================================================
         r_rs1         <= std_logic_vector(to_unsigned(10, n));
         r_rs2         <= std_logic_vector(to_unsigned(99, n)); -- overridden by forwarding
         mem_wb_result <= std_logic_vector(to_unsigned(7, n));
         forward_a     <= "00";
-        forward_b     <= "10";
+        forward_b     <= "11";
         alu_operation <= "001";
         alu_src       <= '0';
         flag_enable   <= '1';
         wait for CLK_PERIOD;
-        report "TEST 9: ForwardB MEM/WB | r_rs1=10 fwd=7 | expected=17 got=" &
+        report "TEST 9: ForwardB MEM/WB (11) | r_rs1=10 fwd=7 | expected=17 got=" &
             integer'image(to_integer(unsigned(alu_result))) severity note;
         assert alu_result = std_logic_vector(to_unsigned(17, n))
             report "FAIL TEST 9: ForwardB expected 17 got " &

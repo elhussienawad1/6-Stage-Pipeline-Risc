@@ -20,7 +20,7 @@ architecture structure of reg_file is
     signal q_regs : reg_array;  -- the actual registers
 
 begin
-
+    --write 1 overwrites write 2 if both enabled for same address
     gen_regs: for i in 0 to M-1 generate
     begin
         process(clk, rst)

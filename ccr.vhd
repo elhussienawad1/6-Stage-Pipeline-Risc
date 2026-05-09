@@ -6,6 +6,7 @@ entity CCR is
         clk: in std_logic;            -- Clock
         rst: in std_logic;            -- Synchronous reset
         flag_enable: in std_logic;    -- 1 = update CCR with new ALU flags
+        clk_enable: in std_logic;
 
         -- Inputs from ALU
         alu_Z: in std_logic;    -- Zero flag from ALU
@@ -31,7 +32,7 @@ begin
             N_reg <= '0';
             C_reg <= '0';
             
-        elsif rising_edge(clk) then
+        elsif rising_edge(clk) and clk_enable='1' then
             if flag_enable = '1' then
                 -- Update flags from ALU only when control signal updateFlags = 1
                 Z_reg <= alu_Z;
@@ -42,8 +43,8 @@ begin
     end process;
 
     -- immediate output when flag_enable is high
-    zero <= alu_Z when flag_enable = '1' else Z_reg;
-    negative <= alu_N when flag_enable = '1' else N_reg;
-    carry <= alu_C when flag_enable = '1' else C_reg;
+    zero <= alu_Z when (flag_enable = '1' and clk_enable='1') else Z_reg;
+    negative <= alu_N when (flag_enable = '1' and clk_enable='1') else N_reg;
+    carry <= alu_C when (flag_enable = '1' and clk_enable='1') else C_reg;
 
 end a_ccr;

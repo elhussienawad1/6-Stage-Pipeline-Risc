@@ -26,6 +26,7 @@ architecture tb of execute_1_tb is
         generic (n : integer := 32);
         port(
             clk, rst       : in std_logic;
+            clk_enable     : in std_logic;
             r_rs1          : in std_logic_vector(n-1 downto 0);
             r_rs2          : in std_logic_vector(n-1 downto 0);
             imm            : in std_logic_vector(n-1 downto 0);
@@ -49,6 +50,7 @@ architecture tb of execute_1_tb is
     end component;
 
     signal clk, rst        : std_logic := '0';
+    signal clk_enable      : std_logic := '1';
     signal r_rs1, r_rs2    : std_logic_vector(n-1 downto 0) := (others => '0');
     signal imm             : std_logic_vector(n-1 downto 0) := (others => '0');
     signal ex1_ex2_result  : std_logic_vector(n-1 downto 0) := (others => '0');
@@ -73,6 +75,7 @@ begin
     uut: execute_1 generic map(n) port map(
         clk            => clk,
         rst            => rst,
+        clk_enable     => clk_enable,
         r_rs1          => r_rs1,
         r_rs2          => r_rs2,
         imm            => imm,

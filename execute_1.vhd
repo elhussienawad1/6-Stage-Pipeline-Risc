@@ -5,6 +5,7 @@ entity execute_1 is
     generic (n:integer :=32);
     port(
         clk,rst: in std_logic; --for ccr
+        clk_enable: in std_logic;
         r_rs1 : in std_logic_vector(n-1 downto 0);
         r_rs2 : in std_logic_vector(n-1 downto 0);
         imm : in std_logic_vector(n-1 downto 0);
@@ -47,16 +48,13 @@ architecture a_execute_1 of execute_1 is
 
     component ccr is
         Port (
-        clk: in std_logic;            -- Clock
-        rst: in std_logic;            -- Synchronous reset
-        flag_enable: in std_logic;    -- 1 = update CCR with new ALU flags
-
-        -- Inputs from ALU
-        alu_Z: in std_logic;    -- Zero flag from ALU
-        alu_N: in std_logic;    -- Negative flag from ALU
-        alu_C: in std_logic;    -- Carry flag from ALU
-
-        -- Outputs (to branch instructions / control)
+        clk: in std_logic;
+        rst: in std_logic;
+        flag_enable: in std_logic;
+        clk_enable: in std_logic;
+        alu_Z: in std_logic;
+        alu_N: in std_logic;
+        alu_C: in std_logic;
         zero: out std_logic;
         negative: out std_logic;
         carry: out std_logic
@@ -88,8 +86,8 @@ architecture a_execute_1 of execute_1 is
 
     begin 
         exec_1_alu : alu generic map(n) port map (operand_1,operand_2,'0',alu_operation,alu_result_temp,alu_carry_temp,alu_zero,alu_negative);
-        ccr_main : ccr port map(clk,rst,flag_enable,ccr_main_in_zero,ccr_main_in_negative,ccr_main_in_carry,ccr_main_out_zero,ccr_main_out_negative,ccr_main_out_carry);
-        ccr_restore : ccr port map(clk,rst,store_ccr,ccr_main_out_zero,ccr_main_out_negative,ccr_main_out_carry,ccr_store_zero,ccr_store_negative,ccr_store_carry);
+        ccr_main : ccr port map(clk,rst,clk_enable,flag_enable,ccr_main_in_zero,ccr_main_in_negative,ccr_main_in_carry,ccr_main_out_zero,ccr_main_out_negative,ccr_main_out_carry);
+        ccr_restore : ccr port map(clk,rst,clk_enable,store_ccr,ccr_main_out_zero,ccr_main_out_negative,ccr_main_out_carry,ccr_store_zero,ccr_store_negative,ccr_store_carry);
 
         operand_2_interm<=r_rs2 when alu_src='0'
         else imm;

@@ -14,7 +14,7 @@ entity f_d_reg is
         inputport_d   : in  std_logic_vector(31 downto 0);
         inputport_q   : out std_logic_vector(31 downto 0)
     );
-end if_id_reg;
+end f_d_reg;
 
 architecture dff of f_d_reg is
 begin

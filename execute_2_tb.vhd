@@ -7,8 +7,7 @@ end execute_2_tb;
 
 architecture tb of execute_2_tb is
 
-    constant n          : integer := 32;
-    constant CLK_PERIOD : time    := 10 ns;
+    constant CLK_PERIOD : time := 10 ns;
 
     function to_hstring(slv : std_logic_vector) return string is
         constant HEX    : string(1 to 16) := "0123456789ABCDEF";
@@ -23,162 +22,6 @@ architecture tb of execute_2_tb is
     end function;
 
     -- =========================================================
-    -- Component declarations
-    -- =========================================================
-
-    component execute_2 is
-        generic (n : integer := 32);
-        port(
-            rst, clk    : in  std_logic;
-            clk_en      : in  std_logic;
-            rsrc        : in  std_logic_vector(n-1 downto 0);
-            imm_val     : in  std_logic_vector(n-1 downto 0);
-            branch_type : in  std_logic_vector(1 downto 0);
-            branch, Z, C, Neg : in std_logic;
-            pc_src      : out std_logic;
-            address     : out std_logic_vector(n-1 downto 0)
-        );
-    end component;
-
-    component ex2_mem_forwarding is
-        generic (n : integer := 32);
-        port(
-            clk, rst : in std_logic;
-            clk_en   : in std_logic;
-            flush    : in std_logic;
-            incremented_pc_in : in std_logic_vector(n-1 downto 0);
-            pc_in             : in std_logic_vector(n-1 downto 0);
-            in_port_in        : in std_logic_vector(n-1 downto 0);
-            r_rsrc1_in        : in std_logic_vector(n-1 downto 0);
-            r_rsrc2_in        : in std_logic_vector(n-1 downto 0);
-            alu_result_in     : in std_logic_vector(n-1 downto 0);
-            address_in        : in std_logic_vector(n-1 downto 0);
-            rdst_in           : in std_logic_vector(2 downto 0);
-            rsrc1_in          : in std_logic_vector(2 downto 0);
-            inc_sp_in        : in std_logic;
-            dec_sp_in        : in std_logic;
-            mem_add_src_in   : in std_logic;
-            mem_data_src_in  : in std_logic;
-            mem_read_in      : in std_logic;
-            mem_write_in     : in std_logic;
-            output_enable_in : in std_logic;
-            mem_to_reg_in    : in std_logic;
-            reg_to_reg_in    : in std_logic;
-            input_enable_in  : in std_logic;
-            reg_write_in     : in std_logic;
-            reg2_write_in    : in std_logic;
-            incremented_pc_out : out std_logic_vector(n-1 downto 0);
-            pc_out             : out std_logic_vector(n-1 downto 0);
-            in_port_out        : out std_logic_vector(n-1 downto 0);
-            r_rsrc1_out        : out std_logic_vector(n-1 downto 0);
-            r_rsrc2_out        : out std_logic_vector(n-1 downto 0);
-            alu_result_out     : out std_logic_vector(n-1 downto 0);
-            address_out        : out std_logic_vector(n-1 downto 0);
-            rdst_out           : out std_logic_vector(2 downto 0);
-            rsrc1_out          : out std_logic_vector(2 downto 0);
-            inc_sp_out        : out std_logic;
-            dec_sp_out        : out std_logic;
-            mem_add_src_out   : out std_logic;
-            mem_data_src_out  : out std_logic;
-            mem_read_out      : out std_logic;
-            mem_write_out     : out std_logic;
-            output_enable_out : out std_logic;
-            mem_to_reg_out    : out std_logic;
-            reg_to_reg_out    : out std_logic;
-            input_enable_out  : out std_logic;
-            reg_write_out     : out std_logic;
-            reg2_write_out    : out std_logic
-        );
-    end component;
-
-    component mem_stage is
-        generic (n : integer := 32);
-        port(
-            clk, rst          : in  std_logic;
-            address_in        : in  std_logic_vector(n-1 downto 0);
-            r_rsrc1_in        : in  std_logic_vector(n-1 downto 0);
-            r_rsrc2_in        : in  std_logic_vector(n-1 downto 0);
-            incremented_pc_in : in  std_logic_vector(n-1 downto 0);
-            inc_sp            : in  std_logic;
-            dec_sp            : in  std_logic;
-            mem_add_src       : in  std_logic;
-            mem_data_src      : in  std_logic;
-            mem_read          : in  std_logic;
-            mem_write         : in  std_logic;
-            mem_address_out   : out std_logic_vector(n-1 downto 0);
-            writedata_out     : out std_logic_vector(n-1 downto 0);
-            mem_read_out      : out std_logic;
-            mem_write_out     : out std_logic;
-            mem_data_in       : in  std_logic_vector(n-1 downto 0);
-            mem_data_out      : out std_logic_vector(n-1 downto 0);
-            sp_out            : out std_logic_vector(n-1 downto 0)
-        );
-    end component;
-
-    component mem_wb_forwarding is
-        generic (n : integer := 32);
-        port(
-            clk, rst          : in  std_logic;
-            clk_en            : in  std_logic;
-            incremented_pc_in : in  std_logic_vector(n-1 downto 0);
-            in_port_in        : in  std_logic_vector(n-1 downto 0);
-            r_rsrc1_in        : in  std_logic_vector(n-1 downto 0);
-            r_rsrc2_in        : in  std_logic_vector(n-1 downto 0);
-            alu_result_in     : in  std_logic_vector(n-1 downto 0);
-            mem_data_in       : in  std_logic_vector(n-1 downto 0);
-            rdst_in           : in  std_logic_vector(2 downto 0);
-            rsrc1_in          : in  std_logic_vector(2 downto 0);
-            output_enable_in  : in  std_logic;
-            mem_to_reg_in     : in  std_logic;
-            reg_to_reg_in     : in  std_logic;
-            input_enable_in   : in  std_logic;
-            reg_write_in      : in  std_logic;
-            reg2_write_in     : in  std_logic;
-            incremented_pc_out : out std_logic_vector(n-1 downto 0);
-            in_port_out        : out std_logic_vector(n-1 downto 0);
-            r_rsrc1_out        : out std_logic_vector(n-1 downto 0);
-            r_rsrc2_out        : out std_logic_vector(n-1 downto 0);
-            alu_result_out     : out std_logic_vector(n-1 downto 0);
-            mem_data_out       : out std_logic_vector(n-1 downto 0);
-            rdst_out           : out std_logic_vector(2 downto 0);
-            rsrc1_out          : out std_logic_vector(2 downto 0);
-            output_enable_out  : out std_logic;
-            mem_to_reg_out     : out std_logic;
-            reg_to_reg_out     : out std_logic;
-            input_enable_out   : out std_logic;
-            reg_write_out      : out std_logic;
-            reg2_write_out     : out std_logic
-        );
-    end component;
-
-    component writeback is
-        generic (n : integer := 32);
-        port(
-            alu_result    : in  std_logic_vector(n-1 downto 0);
-            mem_data      : in  std_logic_vector(n-1 downto 0);
-            in_port       : in  std_logic_vector(n-1 downto 0);
-            r_rsrc1       : in  std_logic_vector(n-1 downto 0);
-            r_rsrc2       : in  std_logic_vector(n-1 downto 0);
-            rdst          : in  std_logic_vector(2 downto 0);
-            rsrc1         : in  std_logic_vector(2 downto 0);
-            output_enable : in  std_logic;
-            input_enable  : in  std_logic;
-            mem_to_reg    : in  std_logic;
-            reg_to_reg    : in  std_logic;
-            reg_write     : in  std_logic;
-            reg2_write    : in  std_logic;
-            out_port      : out std_logic_vector(n-1 downto 0);
-            write_data_1  : out std_logic_vector(n-1 downto 0);
-            write_addr_1  : out std_logic_vector(2 downto 0);
-            write_en_1    : out std_logic;
-            write_data_2  : out std_logic_vector(n-1 downto 0);
-            write_addr_2  : out std_logic_vector(2 downto 0);
-            write_en_2    : out std_logic;
-            wb_result     : out std_logic_vector(n-1 downto 0)
-        );
-    end component;
-
-    -- =========================================================
     -- Signals
     -- =========================================================
 
@@ -186,29 +29,29 @@ architecture tb of execute_2_tb is
 
     -- execute_2 inputs
     signal ex2_clk_en      : std_logic := '1';
-    signal ex2_rsrc        : std_logic_vector(n-1 downto 0) := (others => '0');
-    signal ex2_imm_val     : std_logic_vector(n-1 downto 0) := (others => '0');
-    signal ex2_branch_type : std_logic_vector(1 downto 0)   := "00";
+    signal ex2_rsrc        : std_logic_vector(31 downto 0) := (others => '0');
+    signal ex2_imm_val     : std_logic_vector(31 downto 0) := (others => '0');
+    signal ex2_branch_type : std_logic_vector(1 downto 0)  := "00";
     signal ex2_branch      : std_logic := '0';
     signal ex2_Z           : std_logic := '0';
     signal ex2_C           : std_logic := '0';
     signal ex2_Neg         : std_logic := '0';
     -- execute_2 outputs
     signal ex2_pc_src      : std_logic;
-    signal ex2_address     : std_logic_vector(n-1 downto 0);
+    signal ex2_address     : std_logic_vector(31 downto 0);
 
     -- ex2_mem_forwarding inputs (driven directly in tests, independent of execute_2)
     signal fwd1_clk_en            : std_logic := '1';
     signal fwd1_flush             : std_logic := '0';
-    signal fwd1_incremented_pc_in : std_logic_vector(n-1 downto 0) := (others => '0');
-    signal fwd1_pc_in             : std_logic_vector(n-1 downto 0) := (others => '0');
-    signal fwd1_in_port_in        : std_logic_vector(n-1 downto 0) := (others => '0');
-    signal fwd1_r_rsrc1_in        : std_logic_vector(n-1 downto 0) := (others => '0');
-    signal fwd1_r_rsrc2_in        : std_logic_vector(n-1 downto 0) := (others => '0');
-    signal fwd1_alu_result_in     : std_logic_vector(n-1 downto 0) := (others => '0');
-    signal fwd1_address_in        : std_logic_vector(n-1 downto 0) := (others => '0');
-    signal fwd1_rdst_in           : std_logic_vector(2 downto 0)   := (others => '0');
-    signal fwd1_rsrc1_in          : std_logic_vector(2 downto 0)   := (others => '0');
+    signal fwd1_incremented_pc_in : std_logic_vector(31 downto 0) := (others => '0');
+    signal fwd1_pc_in             : std_logic_vector(31 downto 0) := (others => '0');
+    signal fwd1_in_port_in        : std_logic_vector(31 downto 0) := (others => '0');
+    signal fwd1_r_rsrc1_in        : std_logic_vector(31 downto 0) := (others => '0');
+    signal fwd1_r_rsrc2_in        : std_logic_vector(31 downto 0) := (others => '0');
+    signal fwd1_alu_result_in     : std_logic_vector(31 downto 0) := (others => '0');
+    signal fwd1_address_in        : std_logic_vector(31 downto 0) := (others => '0');
+    signal fwd1_rdst_in           : std_logic_vector(2 downto 0)  := (others => '0');
+    signal fwd1_rsrc1_in          : std_logic_vector(2 downto 0)  := (others => '0');
     signal fwd1_inc_sp_in         : std_logic := '0';
     signal fwd1_dec_sp_in         : std_logic := '0';
     signal fwd1_mem_add_src_in    : std_logic := '0';
@@ -222,13 +65,13 @@ architecture tb of execute_2_tb is
     signal fwd1_reg_write_in      : std_logic := '0';
     signal fwd1_reg2_write_in     : std_logic := '0';
     -- ex2_mem_forwarding outputs (wires into mem_stage)
-    signal fwd1_incremented_pc_out : std_logic_vector(n-1 downto 0);
-    signal fwd1_pc_out             : std_logic_vector(n-1 downto 0);
-    signal fwd1_in_port_out        : std_logic_vector(n-1 downto 0);
-    signal fwd1_r_rsrc1_out        : std_logic_vector(n-1 downto 0);
-    signal fwd1_r_rsrc2_out        : std_logic_vector(n-1 downto 0);
-    signal fwd1_alu_result_out     : std_logic_vector(n-1 downto 0);
-    signal fwd1_address_out        : std_logic_vector(n-1 downto 0);
+    signal fwd1_incremented_pc_out : std_logic_vector(31 downto 0);
+    signal fwd1_pc_out             : std_logic_vector(31 downto 0);
+    signal fwd1_in_port_out        : std_logic_vector(31 downto 0);
+    signal fwd1_r_rsrc1_out        : std_logic_vector(31 downto 0);
+    signal fwd1_r_rsrc2_out        : std_logic_vector(31 downto 0);
+    signal fwd1_alu_result_out     : std_logic_vector(31 downto 0);
+    signal fwd1_address_out        : std_logic_vector(31 downto 0);
     signal fwd1_rdst_out           : std_logic_vector(2 downto 0);
     signal fwd1_rsrc1_out          : std_logic_vector(2 downto 0);
     signal fwd1_inc_sp_out         : std_logic;
@@ -245,25 +88,25 @@ architecture tb of execute_2_tb is
     signal fwd1_reg2_write_out     : std_logic;
 
     -- mem_stage top-level memory interface
-    signal mem_address    : std_logic_vector(n-1 downto 0);
-    signal writedata      : std_logic_vector(n-1 downto 0);
+    signal mem_address    : std_logic_vector(31 downto 0);
+    signal writedata      : std_logic_vector(31 downto 0);
     signal mem_read_sig   : std_logic;
     signal mem_write_sig  : std_logic;
-    signal tb_mem_data    : std_logic_vector(n-1 downto 0) := (others => '0');
+    signal tb_mem_data    : std_logic_vector(31 downto 0) := (others => '0');
     -- mem_stage outputs
-    signal mem_data_out   : std_logic_vector(n-1 downto 0);
-    signal sp_out         : std_logic_vector(n-1 downto 0);
+    signal mem_data_out   : std_logic_vector(31 downto 0);
+    signal sp_out         : std_logic_vector(31 downto 0);
 
     -- mem_wb_forwarding inputs (wired from ex2_mem_forwarding + mem_stage)
     signal fwd2_clk_en : std_logic := '1';
 
     -- mem_wb_forwarding outputs (wired into writeback)
-    signal fwd2_incremented_pc_out : std_logic_vector(n-1 downto 0);
-    signal fwd2_in_port_out        : std_logic_vector(n-1 downto 0);
-    signal fwd2_r_rsrc1_out        : std_logic_vector(n-1 downto 0);
-    signal fwd2_r_rsrc2_out        : std_logic_vector(n-1 downto 0);
-    signal fwd2_alu_result_out     : std_logic_vector(n-1 downto 0);
-    signal fwd2_mem_data_out       : std_logic_vector(n-1 downto 0);
+    signal fwd2_incremented_pc_out : std_logic_vector(31 downto 0);
+    signal fwd2_in_port_out        : std_logic_vector(31 downto 0);
+    signal fwd2_r_rsrc1_out        : std_logic_vector(31 downto 0);
+    signal fwd2_r_rsrc2_out        : std_logic_vector(31 downto 0);
+    signal fwd2_alu_result_out     : std_logic_vector(31 downto 0);
+    signal fwd2_mem_data_out       : std_logic_vector(31 downto 0);
     signal fwd2_rdst_out           : std_logic_vector(2 downto 0);
     signal fwd2_rsrc1_out          : std_logic_vector(2 downto 0);
     signal fwd2_output_enable_out  : std_logic;
@@ -274,14 +117,14 @@ architecture tb of execute_2_tb is
     signal fwd2_reg2_write_out     : std_logic;
 
     -- writeback outputs
-    signal wb_out_port    : std_logic_vector(n-1 downto 0);
-    signal wb_write_data1 : std_logic_vector(n-1 downto 0);
+    signal wb_out_port    : std_logic_vector(31 downto 0);
+    signal wb_write_data1 : std_logic_vector(31 downto 0);
     signal wb_write_addr1 : std_logic_vector(2 downto 0);
     signal wb_write_en1   : std_logic;
-    signal wb_write_data2 : std_logic_vector(n-1 downto 0);
+    signal wb_write_data2 : std_logic_vector(31 downto 0);
     signal wb_write_addr2 : std_logic_vector(2 downto 0);
     signal wb_write_en2   : std_logic;
-    signal wb_result      : std_logic_vector(n-1 downto 0);
+    signal wb_result      : std_logic_vector(31 downto 0);
 
 begin
 
@@ -289,7 +132,7 @@ begin
     -- Instantiations
     -- =========================================================
 
-    uut_ex2: execute_2 generic map(n) port map(
+    uut_ex2: entity work.execute_2 port map(
         rst         => rst,
         clk         => clk,
         clk_en      => ex2_clk_en,
@@ -304,7 +147,7 @@ begin
         address     => ex2_address
     );
 
-    uut_fwd1: ex2_mem_forwarding generic map(n) port map(
+    uut_fwd1: entity work.ex2_mem_forwarding port map(
         clk               => clk,
         rst               => rst,
         clk_en            => fwd1_clk_en,
@@ -353,7 +196,7 @@ begin
         reg2_write_out     => fwd1_reg2_write_out
     );
 
-    uut_mem: mem_stage generic map(n) port map(
+    uut_mem: entity work.mem_stage port map(
         clk               => clk,
         rst               => rst,
         address_in        => fwd1_address_out,
@@ -375,7 +218,7 @@ begin
         sp_out            => sp_out
     );
 
-    uut_fwd2: mem_wb_forwarding generic map(n) port map(
+    uut_fwd2: entity work.mem_wb_forwarding port map(
         clk               => clk,
         rst               => rst,
         clk_en            => fwd2_clk_en,
@@ -409,7 +252,7 @@ begin
         reg2_write_out     => fwd2_reg2_write_out
     );
 
-    uut_wb: writeback generic map(n) port map(
+    uut_wb: entity work.writeback port map(
         alu_result    => fwd2_alu_result_out,
         mem_data      => fwd2_mem_data_out,
         in_port       => fwd2_in_port_out,
@@ -522,12 +365,12 @@ begin
         -- =========================================================
         -- TEST 4: EX2 address adder (combinational) rsrc=100 + imm=50 = 150
         -- =========================================================
-        ex2_rsrc    <= std_logic_vector(to_unsigned(100, n));
-        ex2_imm_val <= std_logic_vector(to_unsigned(50, n));
+        ex2_rsrc    <= std_logic_vector(to_unsigned(100, 32));
+        ex2_imm_val <= std_logic_vector(to_unsigned(50, 32));
         wait for 1 ns; -- combinational settle
         report "TEST 4: address adder rsrc=100 imm=50 | expected=150 got=" &
             integer'image(to_integer(unsigned(ex2_address))) severity note;
-        assert ex2_address = std_logic_vector(to_unsigned(150, n))
+        assert ex2_address = std_logic_vector(to_unsigned(150, 32))
             report "FAIL TEST 4: address adder expected 150 got " &
             integer'image(to_integer(unsigned(ex2_address))) severity error;
         ex2_rsrc    <= (others => '0');
@@ -556,7 +399,7 @@ begin
         -- fwd1 -> fwd2 -> writeback: 2 clocks pipeline latency
         -- =========================================================
         clear_fwd1_ctrl;
-        fwd1_alu_result_in <= std_logic_vector(to_unsigned(42, n));
+        fwd1_alu_result_in <= std_logic_vector(to_unsigned(42, 32));
         fwd1_reg_write_in  <= '1';
         fwd1_rdst_in       <= "010";
         fwd1_clk_en        <= '1';
@@ -570,7 +413,7 @@ begin
             integer'image(to_integer(unsigned(wb_write_data1))) &
             " write_addr1=" & integer'image(to_integer(unsigned(wb_write_addr1))) &
             " write_en1=" & std_logic'image(wb_write_en1) severity note;
-        assert wb_write_data1 = std_logic_vector(to_unsigned(42, n))
+        assert wb_write_data1 = std_logic_vector(to_unsigned(42, 32))
             report "FAIL TEST 6: WB ALU result expected 42 got " &
             integer'image(to_integer(unsigned(wb_write_data1))) severity error;
         assert wb_write_addr1 = "010"
@@ -586,7 +429,7 @@ begin
         -- TEST 7: WB mem_to_reg path (LDD/POP)
         -- =========================================================
         clear_fwd1_ctrl;
-        fwd1_alu_result_in <= std_logic_vector(to_unsigned(99, n));
+        fwd1_alu_result_in <= std_logic_vector(to_unsigned(99, 32));
         fwd1_mem_to_reg_in <= '1';
         fwd1_reg_write_in  <= '1';
         fwd1_rdst_in       <= "101";
@@ -728,7 +571,7 @@ begin
         -- TEST 12: MEM stage LDD — mem_add_src=0, address passes through
         -- =========================================================
         clear_fwd1_ctrl;
-        fwd1_address_in     <= std_logic_vector(to_unsigned(100, n));
+        fwd1_address_in     <= std_logic_vector(to_unsigned(100, 32));
         fwd1_mem_add_src_in <= '0';
         fwd1_mem_read_in    <= '1';
         fwd1_clk_en         <= '1';
@@ -736,7 +579,7 @@ begin
         report "TEST 12: MEM LDD address=100 mem_add_src=0 | expected mem_address=100 got=" &
             integer'image(to_integer(unsigned(mem_address))) &
             " mem_read=" & std_logic'image(mem_read_sig) severity note;
-        assert mem_address = std_logic_vector(to_unsigned(100, n))
+        assert mem_address = std_logic_vector(to_unsigned(100, 32))
             report "FAIL TEST 12: LDD mem_address expected 100 got " &
             integer'image(to_integer(unsigned(mem_address))) severity error;
         assert mem_read_sig = '1'
@@ -783,13 +626,13 @@ begin
         report "TEST 14: MEM PUSH dec_sp=1 mem_add_src=1 | SP initial=4095" severity note;
         report "         mem_address=" & integer'image(to_integer(unsigned(mem_address))) &
             " (expected 4095, writes to current SP)" severity note;
-        assert mem_address = std_logic_vector(to_unsigned(4095, n))
+        assert mem_address = std_logic_vector(to_unsigned(4095, 32))
             report "FAIL TEST 14: PUSH mem_address expected 4095 got " &
             integer'image(to_integer(unsigned(mem_address))) severity error;
         wait for CLK_PERIOD; -- SP register updates on this edge -> SP becomes 4094
         report "         sp_out after decrement=" & integer'image(to_integer(unsigned(sp_out))) &
             " (expected 4094)" severity note;
-        assert sp_out = std_logic_vector(to_unsigned(4094, n))
+        assert sp_out = std_logic_vector(to_unsigned(4094, 32))
             report "FAIL TEST 14: SP after PUSH expected 4094 got " &
             integer'image(to_integer(unsigned(sp_out))) severity error;
         fwd1_dec_sp_in    <= '0';
@@ -819,6 +662,242 @@ begin
         fwd1_reg_write_in  <= '0';
         fwd1_rdst_in       <= (others => '0');
         fwd1_flush         <= '0';
+        wait for CLK_PERIOD;
+
+        -- =========================================================
+        -- TEST 16: JC taken (branch_type="01", C='1')
+        -- =========================================================
+        ex2_branch      <= '1';
+        ex2_branch_type <= "01";
+        ex2_C           <= '1';
+        ex2_clk_en      <= '1';
+        wait for CLK_PERIOD;
+        report "TEST 16: JC taken C=1 | expected pc_src=1 got=" &
+            std_logic'image(ex2_pc_src) severity note;
+        assert ex2_pc_src = '1'
+            report "FAIL TEST 16: JC taken pc_src should be 1 got " &
+            std_logic'image(ex2_pc_src) severity error;
+        ex2_branch <= '0';
+        ex2_C      <= '0';
+        wait for CLK_PERIOD;
+
+        -- =========================================================
+        -- TEST 17: execute_2 clk_en=0 stall — pc_src must hold
+        -- Drive JMP with clk_en=1 to set pc_src=1, then stall with clk_en=0
+        -- and assert a non-taken condition. pc_src should NOT update.
+        -- =========================================================
+        ex2_branch      <= '1';
+        ex2_branch_type <= "11";   -- JMP -> pc_src=1
+        ex2_clk_en      <= '1';
+        wait for CLK_PERIOD;
+        assert ex2_pc_src = '1'
+            report "FAIL TEST 17 setup: JMP should have set pc_src=1" severity error;
+        -- Now stall and present a not-taken case
+        ex2_branch      <= '1';
+        ex2_branch_type <= "00";
+        ex2_Z           <= '0';    -- would normally make pc_src=0
+        ex2_clk_en      <= '0';    -- STALL
+        wait for CLK_PERIOD;
+        report "TEST 17: clk_en=0 stall | pc_src should hold at 1 got=" &
+            std_logic'image(ex2_pc_src) severity note;
+        assert ex2_pc_src = '1'
+            report "FAIL TEST 17: clk_en=0 stall pc_src should hold 1 got " &
+            std_logic'image(ex2_pc_src) severity error;
+        -- Resume
+        ex2_clk_en      <= '1';
+        wait for CLK_PERIOD;
+        assert ex2_pc_src = '0'
+            report "FAIL TEST 17: after resume pc_src should drop to 0 got " &
+            std_logic'image(ex2_pc_src) severity error;
+        ex2_branch <= '0';
+        wait for CLK_PERIOD;
+
+        -- =========================================================
+        -- TEST 18: ex2_mem_forwarding clk_en=0 stall — data + control hold
+        -- =========================================================
+        clear_fwd1_ctrl;
+        fwd1_alu_result_in <= x"DEADBEEF";
+        fwd1_reg_write_in  <= '1';
+        fwd1_rdst_in       <= "011";
+        fwd1_clk_en        <= '1';
+        wait for CLK_PERIOD;   -- fwd1 latches: alu_result_out=DEADBEEF, reg_write_out=1
+        assert fwd1_alu_result_out = x"DEADBEEF"
+            report "FAIL TEST 18 setup: alu_result_out should be 0xDEADBEEF" severity error;
+        assert fwd1_reg_write_out = '1'
+            report "FAIL TEST 18 setup: reg_write_out should be 1" severity error;
+        -- Now stall and change inputs
+        fwd1_alu_result_in <= x"FEEDFACE";
+        fwd1_reg_write_in  <= '0';
+        fwd1_rdst_in       <= "111";
+        fwd1_clk_en        <= '0';   -- STALL
+        wait for CLK_PERIOD;
+        report "TEST 18: fwd1 stall | alu_result_out should hold 0xDEADBEEF got=0x" &
+            to_hstring(fwd1_alu_result_out) severity note;
+        assert fwd1_alu_result_out = x"DEADBEEF"
+            report "FAIL TEST 18: stall should hold alu_result_out got 0x" &
+            to_hstring(fwd1_alu_result_out) severity error;
+        assert fwd1_reg_write_out = '1'
+            report "FAIL TEST 18: stall should hold reg_write_out" severity error;
+        assert fwd1_rdst_out = "011"
+            report "FAIL TEST 18: stall should hold rdst_out" severity error;
+        -- Resume
+        fwd1_clk_en <= '1';
+        wait for CLK_PERIOD;
+        assert fwd1_alu_result_out = x"FEEDFACE"
+            report "FAIL TEST 18: after resume should latch new value got 0x" &
+            to_hstring(fwd1_alu_result_out) severity error;
+        clear_fwd1_ctrl;
+        fwd1_alu_result_in <= (others => '0');
+        fwd1_rdst_in       <= (others => '0');
+        wait for CLK_PERIOD;
+
+        -- =========================================================
+        -- TEST 19: MEM POP — inc_sp=1 -> mem_address = SP+1, SP increments
+        -- Reset SP=4095. inc_sp=1 -> read addr = 4096, then SP becomes 4096.
+        -- =========================================================
+        rst <= '1';
+        wait for CLK_PERIOD;
+        rst <= '0';
+        wait for CLK_PERIOD;
+        clear_fwd1_ctrl;
+        fwd1_inc_sp_in      <= '1';
+        fwd1_mem_add_src_in <= '1';
+        fwd1_mem_read_in    <= '1';
+        fwd1_clk_en         <= '1';
+        wait for CLK_PERIOD;   -- fwd1 latches; mem_stage sees inc_sp=1 mem_add_src=1
+        report "TEST 19: MEM POP inc_sp=1 mem_add_src=1 | SP initial=4095" severity note;
+        report "         mem_address=" & integer'image(to_integer(unsigned(mem_address))) &
+            " (expected 4096, reads SP+1)" severity note;
+        assert mem_address = std_logic_vector(to_unsigned(4096, 32))
+            report "FAIL TEST 19: POP mem_address expected 4096 got " &
+            integer'image(to_integer(unsigned(mem_address))) severity error;
+        assert mem_read_sig = '1'
+            report "FAIL TEST 19: mem_read should be 1" severity error;
+        wait for CLK_PERIOD;   -- SP register updates -> SP becomes 4096
+        report "         sp_out after increment=" & integer'image(to_integer(unsigned(sp_out))) &
+            " (expected 4096)" severity note;
+        assert sp_out = std_logic_vector(to_unsigned(4096, 32))
+            report "FAIL TEST 19: SP after POP expected 4096 got " &
+            integer'image(to_integer(unsigned(sp_out))) severity error;
+        clear_fwd1_ctrl;
+        wait for CLK_PERIOD;
+
+        -- =========================================================
+        -- TEST 20: SP hold — no inc/dec, SP unchanged across cycles
+        -- =========================================================
+        rst <= '1';
+        wait for CLK_PERIOD;
+        rst <= '0';
+        wait for CLK_PERIOD;
+        clear_fwd1_ctrl;
+        fwd1_clk_en <= '1';
+        wait for CLK_PERIOD * 3;   -- several cycles with no inc/dec
+        report "TEST 20: SP hold (no inc/dec) | expected sp_out=4095 got=" &
+            integer'image(to_integer(unsigned(sp_out))) severity note;
+        assert sp_out = std_logic_vector(to_unsigned(4095, 32))
+            report "FAIL TEST 20: SP should hold at 4095 got " &
+            integer'image(to_integer(unsigned(sp_out))) severity error;
+
+        -- =========================================================
+        -- TEST 21: MEM CALL/INT — mem_data_src=1 writes incremented_pc as return addr
+        -- =========================================================
+        clear_fwd1_ctrl;
+        fwd1_incremented_pc_in <= x"C0DEBABE";
+        fwd1_r_rsrc1_in        <= x"11111111";   -- should be ignored
+        fwd1_mem_data_src_in   <= '1';
+        fwd1_mem_write_in      <= '1';
+        fwd1_clk_en            <= '1';
+        wait for CLK_PERIOD;
+        report "TEST 21: MEM CALL/INT mem_data_src=1 | expected writedata=0xC0DEBABE got=0x" &
+            to_hstring(writedata) severity note;
+        assert writedata = x"C0DEBABE"
+            report "FAIL TEST 21: writedata expected 0xC0DEBABE got 0x" &
+            to_hstring(writedata) severity error;
+        assert mem_write_sig = '1'
+            report "FAIL TEST 21: mem_write should be 1" severity error;
+        fwd1_incremented_pc_in <= (others => '0');
+        fwd1_r_rsrc1_in        <= (others => '0');
+        clear_fwd1_ctrl;
+        wait for CLK_PERIOD;
+
+        -- =========================================================
+        -- TEST 22: MEM mem_data_in -> mem_data_out pass-through (combinational)
+        -- =========================================================
+        tb_mem_data <= x"5A5A5A5A";
+        wait for 1 ns;
+        report "TEST 22: mem_data_in passthrough | tb_mem_data=0x5A5A5A5A | expected mem_data_out=0x5A5A5A5A got=0x" &
+            to_hstring(mem_data_out) severity note;
+        assert mem_data_out = x"5A5A5A5A"
+            report "FAIL TEST 22: mem_data_out should equal mem_data_in got 0x" &
+            to_hstring(mem_data_out) severity error;
+        tb_mem_data <= (others => '0');
+        wait for CLK_PERIOD;
+
+        -- =========================================================
+        -- TEST 23: WB wb_result equals port1 write data (forwarded to EX1)
+        -- =========================================================
+        clear_fwd1_ctrl;
+        fwd1_alu_result_in <= x"7777BEEF";
+        fwd1_reg_write_in  <= '1';
+        fwd1_rdst_in       <= "010";
+        fwd1_clk_en        <= '1';
+        wait for CLK_PERIOD;   -- fwd1 latches
+        clear_fwd1_ctrl;
+        fwd1_alu_result_in <= (others => '0');
+        fwd1_rdst_in       <= (others => '0');
+        wait for CLK_PERIOD;   -- fwd2 latches
+        report "TEST 23: wb_result | expected wb_result=write_data_1=0x7777BEEF | got wb_result=0x" &
+            to_hstring(wb_result) & " write_data_1=0x" & to_hstring(wb_write_data1) severity note;
+        assert wb_result = wb_write_data1
+            report "FAIL TEST 23: wb_result should equal write_data_1" severity error;
+        assert wb_result = x"7777BEEF"
+            report "FAIL TEST 23: wb_result expected 0x7777BEEF got 0x" &
+            to_hstring(wb_result) severity error;
+        wait for CLK_PERIOD;
+
+        -- =========================================================
+        -- TEST 24: WB priority MUX — input_enable wins over mem_to_reg
+        -- Both asserted simultaneously: should pick in_port (input_enable highest priority)
+        -- =========================================================
+        clear_fwd1_ctrl;
+        fwd1_in_port_in       <= x"AAAA0000";
+        fwd1_input_enable_in  <= '1';
+        fwd1_mem_to_reg_in    <= '1';   -- competing
+        fwd1_reg_write_in     <= '1';
+        fwd1_rdst_in          <= "100";
+        fwd1_clk_en           <= '1';
+        tb_mem_data           <= x"BBBB0000";
+        wait for CLK_PERIOD;   -- fwd1 latches
+        clear_fwd1_ctrl;
+        fwd1_in_port_in       <= (others => '0');
+        fwd1_rdst_in          <= (others => '0');
+        wait for CLK_PERIOD;   -- fwd2 latches
+        report "TEST 24: WB priority | in_port=0xAAAA0000 mem_data=0xBBBB0000 both enables=1 | expected in_port wins got=0x" &
+            to_hstring(wb_write_data1) severity note;
+        assert wb_write_data1 = x"AAAA0000"
+            report "FAIL TEST 24: input_enable should beat mem_to_reg, expected 0xAAAA0000 got 0x" &
+            to_hstring(wb_write_data1) severity error;
+        tb_mem_data <= (others => '0');
+        wait for CLK_PERIOD;
+
+        -- =========================================================
+        -- TEST 25: WB no-write — all enables off => write_en_1 = 0
+        -- =========================================================
+        clear_fwd1_ctrl;
+        fwd1_alu_result_in <= x"99999999";   -- something on the data lines
+        fwd1_reg_write_in  <= '0';
+        fwd1_input_enable_in <= '0';
+        fwd1_clk_en        <= '1';
+        wait for CLK_PERIOD;
+        clear_fwd1_ctrl;
+        fwd1_alu_result_in <= (others => '0');
+        wait for CLK_PERIOD;
+        report "TEST 25: WB no-write | reg_write=0 input_enable=0 | expected write_en_1=0 got=" &
+            std_logic'image(wb_write_en1) severity note;
+        assert wb_write_en1 = '0'
+            report "FAIL TEST 25: write_en_1 should be 0 when both reg_write and input_enable are 0" severity error;
+        assert wb_write_en2 = '0'
+            report "FAIL TEST 25: write_en_2 should also be 0" severity error;
         wait for CLK_PERIOD;
 
         -- =========================================================

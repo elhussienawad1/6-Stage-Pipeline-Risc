@@ -3,7 +3,8 @@ use ieee.std_logic_1164.all;
 
 entity id_ex_reg is
     port(
-        clk, rst : in std_logic;
+        clk, rst    : in std_logic;
+        clk_enable  : in std_logic;
 
         -- ── INPUTS ───────────────────────────────────────────────
 
@@ -177,6 +178,7 @@ begin
             interrupt_enable_out <= '0';
 
         elsif rising_edge(clk) then
+          if clk_enable = '1' then
             -- pass-throughs
             pc_out              <= pc_in;
             input_port_out      <= input_port_in;
@@ -221,6 +223,7 @@ begin
             input_enable_out     <= input_enable_in;
             clock_enable_out     <= clock_enable_in;
             interrupt_enable_out <= interrupt_enable_in;
+          end if;
         end if;
     end process;
 

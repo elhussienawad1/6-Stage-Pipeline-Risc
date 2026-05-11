@@ -5,9 +5,10 @@ use ieee.numeric_std.all;
 entity sp is
     generic (n: integer := 32);
     port(
-        Rst, Clk: in std_logic;
-        d: in std_logic_vector(n-1 downto 0);
-        q: out std_logic_vector(n-1 downto 0)
+        Rst, Clk : in std_logic;
+        enable   : in std_logic;
+        d        : in std_logic_vector(n-1 downto 0);
+        q        : out std_logic_vector(n-1 downto 0)
     );
 end sp;
 
@@ -19,8 +20,10 @@ process(Clk, Rst)
 begin
     if Rst = '1' then
         q <= SP_INITIAL_VALUE;
-    elsif rising_edge(Clk) then 
-        q <= d; 
+    elsif rising_edge(Clk) then
+        if enable = '1' then
+            q <= d;
+        end if;
     end if;
 end process;
 end a_sp;

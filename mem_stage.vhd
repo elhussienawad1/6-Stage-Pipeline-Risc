@@ -39,19 +39,18 @@ end mem_stage;
 architecture a_mem_stage of mem_stage is
 
     component sp is
-        generic (n : integer := 32);
         port(
             Rst, Clk : in std_logic;
             enable   : in std_logic;
-            d        : in std_logic_vector(n-1 downto 0);
-            q        : out std_logic_vector(n-1 downto 0)
+            d        : in std_logic_vector(31 downto 0);
+            q        : out std_logic_vector(31 downto 0)
         );
     end component;
 
-    signal sp_q         : std_logic_vector(n-1 downto 0);
-    signal sp_d         : std_logic_vector(n-1 downto 0);
-    signal sp_plus_one  : std_logic_vector(n-1 downto 0);
-    signal sp_minus_one : std_logic_vector(n-1 downto 0);
+    signal sp_q         : std_logic_vector(31 downto 0);
+    signal sp_d         : std_logic_vector(31 downto 0);
+    signal sp_plus_one  : std_logic_vector(31 downto 0);
+    signal sp_minus_one : std_logic_vector(31 downto 0);
 
 begin
 

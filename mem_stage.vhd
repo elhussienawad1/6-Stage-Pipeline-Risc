@@ -48,9 +48,7 @@ architecture a_mem_stage of mem_stage is
     end component;
 
     signal sp_q         : std_logic_vector(31 downto 0);
-    signal sp_d         : std_logic_vector(31 downto 0);
     signal sp_plus_one  : std_logic_vector(31 downto 0);
-    signal sp_minus_one : std_logic_vector(31 downto 0);
 
 begin
 

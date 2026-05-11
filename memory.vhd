@@ -46,7 +46,7 @@ architecture structure of reg_file_memory is
         return memory;
     end function;
     -- Initialize memory using the function
-    signal memory : mem_array := init_memory_from_file("./comparch_project/test.mem");
+    signal memory : mem_array := init_memory_from_file("./6-Stage-Pipeline-Risc/test.mem");
     signal readdata, instruction : std_logic_vector(N-1 downto 0);
     signal internal_memory_busy : std_logic;
 begin

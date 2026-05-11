@@ -26,6 +26,7 @@ architecture tb of execute_2_tb is
     -- =========================================================
 
     signal clk, rst : std_logic := '0';
+    signal clk_enable : std_logic := '1';
 
     -- execute_2 inputs
     signal ex2_clk_en      : std_logic := '1';
@@ -199,6 +200,7 @@ begin
     uut_mem: entity work.mem_stage port map(
         clk               => clk,
         rst               => rst,
+        clk_enable        => clk_enable,
         address_in        => fwd1_address_out,
         r_rsrc1_in        => fwd1_r_rsrc1_out,
         r_rsrc2_in        => fwd1_r_rsrc2_out,

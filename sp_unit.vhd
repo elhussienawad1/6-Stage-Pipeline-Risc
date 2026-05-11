@@ -5,6 +5,7 @@ use ieee.numeric_std.all;
 entity sp_unit is
     port(
         clk, rst    : in std_logic;
+        clk_enable : in std_logic;
         inc_sp      : in std_logic;
         dec_sp      : in std_logic;
         sp_q        : out std_logic_vector(31 downto 0);
@@ -21,7 +22,7 @@ architecture a_sp_unit of sp_unit is
 
 begin
 
-    sp_reg: entity work.sp port map(rst, clk, d_int, q_int);
+    sp_reg: entity work.sp port map(rst, clk, clk_enable,d_int, q_int);
 
     plus_one_int <= std_logic_vector(unsigned(q_int) + 1);
     minus_one    <= std_logic_vector(unsigned(q_int) - 1);

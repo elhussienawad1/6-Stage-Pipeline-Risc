@@ -4,7 +4,8 @@ use ieee.numeric_std.all;
 
 entity mem_stage is
     port(
-        clk, rst : in std_logic;
+        clk, rst    : in std_logic;
+        clk_enable  : in std_logic;
 
         -- from EX2/MEM register
         address_in        : in std_logic_vector(31 downto 0);  -- EX2 computed (LDD/STD)
@@ -37,13 +38,22 @@ end mem_stage;
 
 architecture a_mem_stage of mem_stage is
 
-    signal sp_q        : std_logic_vector(31 downto 0);
-    signal sp_plus_one : std_logic_vector(31 downto 0);
+    component sp is
+        port(
+            Rst, Clk : in std_logic;
+            enable   : in std_logic;
+            d        : in std_logic_vector(31 downto 0);
+            q        : out std_logic_vector(31 downto 0)
+        );
+    end component;
+
+    signal sp_q         : std_logic_vector(31 downto 0);
+    signal sp_plus_one  : std_logic_vector(31 downto 0);
 
 begin
 
     sp_inst: entity work.sp_unit
-        port map(clk, rst, inc_sp, dec_sp, sp_q, sp_plus_one);
+        port map(clk,rst, clk_enable,  inc_sp, dec_sp, sp_q, sp_plus_one);
 
     -- MemAddrSrc MUX
     -- inc_sp (POP/RET/RTI): read from SP+1 (new top after increment)

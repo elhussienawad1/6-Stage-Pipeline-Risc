@@ -271,33 +271,31 @@ architecture structural of processor is
     end component;
 
     component execute_2 is
-        generic (n : integer := 32);
         port(
             rst, clk    : in  std_logic;
             clk_en      : in  std_logic;
-            rsrc        : in  std_logic_vector(n-1 downto 0);
-            imm_val     : in  std_logic_vector(n-1 downto 0);
+            rsrc        : in  std_logic_vector(31 downto 0);
+            imm_val     : in  std_logic_vector(31 downto 0);
             branch_type : in  std_logic_vector(1 downto 0);
             branch      : in  std_logic;
             Z, C, Neg   : in  std_logic;
             pc_src      : out std_logic;
-            address     : out std_logic_vector(n-1 downto 0)
+            address     : out std_logic_vector(31 downto 0)
         );
     end component;
 
     component ex2_mem_forwarding is
-        generic (n : integer := 32);
         port(
             clk, rst          : in  std_logic;
             clk_en            : in  std_logic;
             flush             : in  std_logic;
-            incremented_pc_in : in  std_logic_vector(n-1 downto 0);
-            pc_in             : in  std_logic_vector(n-1 downto 0);
-            in_port_in        : in  std_logic_vector(n-1 downto 0);
-            r_rsrc1_in        : in  std_logic_vector(n-1 downto 0);
-            r_rsrc2_in        : in  std_logic_vector(n-1 downto 0);
-            alu_result_in     : in  std_logic_vector(n-1 downto 0);
-            address_in        : in  std_logic_vector(n-1 downto 0);
+            incremented_pc_in : in  std_logic_vector(31 downto 0);
+            pc_in             : in  std_logic_vector(31 downto 0);
+            in_port_in        : in  std_logic_vector(31 downto 0);
+            r_rsrc1_in        : in  std_logic_vector(31 downto 0);
+            r_rsrc2_in        : in  std_logic_vector(31 downto 0);
+            alu_result_in     : in  std_logic_vector(31 downto 0);
+            address_in        : in  std_logic_vector(31 downto 0);
             rdst_in           : in  std_logic_vector(2 downto 0);
             rsrc1_in          : in  std_logic_vector(2 downto 0);
             inc_sp_in         : in  std_logic;
@@ -312,13 +310,13 @@ architecture structural of processor is
             input_enable_in   : in  std_logic;
             reg_write_in      : in  std_logic;
             reg2_write_in     : in  std_logic;
-            incremented_pc_out: out std_logic_vector(n-1 downto 0);
-            pc_out            : out std_logic_vector(n-1 downto 0);
-            in_port_out       : out std_logic_vector(n-1 downto 0);
-            r_rsrc1_out       : out std_logic_vector(n-1 downto 0);
-            r_rsrc2_out       : out std_logic_vector(n-1 downto 0);
-            alu_result_out    : out std_logic_vector(n-1 downto 0);
-            address_out       : out std_logic_vector(n-1 downto 0);
+            incremented_pc_out: out std_logic_vector(31 downto 0);
+            pc_out            : out std_logic_vector(31 downto 0);
+            in_port_out       : out std_logic_vector(31 downto 0);
+            r_rsrc1_out       : out std_logic_vector(31 downto 0);
+            r_rsrc2_out       : out std_logic_vector(31 downto 0);
+            alu_result_out    : out std_logic_vector(31 downto 0);
+            address_out       : out std_logic_vector(31 downto 0);
             rdst_out          : out std_logic_vector(2 downto 0);
             rsrc1_out         : out std_logic_vector(2 downto 0);
             inc_sp_out        : out std_logic;
@@ -337,41 +335,39 @@ architecture structural of processor is
     end component;
 
     component mem_stage is
-        generic (n : integer := 32);
         port(
             clk, rst    : in  std_logic;
             clk_enable  : in  std_logic;
-            address_in        : in  std_logic_vector(n-1 downto 0);
-            r_rsrc1_in        : in  std_logic_vector(n-1 downto 0);
-            r_rsrc2_in        : in  std_logic_vector(n-1 downto 0);
-            incremented_pc_in : in  std_logic_vector(n-1 downto 0);
+            address_in        : in  std_logic_vector(31 downto 0);
+            r_rsrc1_in        : in  std_logic_vector(31 downto 0);
+            r_rsrc2_in        : in  std_logic_vector(31 downto 0);
+            incremented_pc_in : in  std_logic_vector(31 downto 0);
             inc_sp            : in  std_logic;
             dec_sp            : in  std_logic;
             mem_add_src       : in  std_logic;
             mem_data_src      : in  std_logic;
             mem_read          : in  std_logic;
             mem_write         : in  std_logic;
-            mem_address_out   : out std_logic_vector(n-1 downto 0);
-            writedata_out     : out std_logic_vector(n-1 downto 0);
+            mem_address_out   : out std_logic_vector(31 downto 0);
+            writedata_out     : out std_logic_vector(31 downto 0);
             mem_read_out      : out std_logic;
             mem_write_out     : out std_logic;
-            mem_data_in       : in  std_logic_vector(n-1 downto 0);
-            mem_data_out      : out std_logic_vector(n-1 downto 0);
-            sp_out            : out std_logic_vector(n-1 downto 0)
+            mem_data_in       : in  std_logic_vector(31 downto 0);
+            mem_data_out      : out std_logic_vector(31 downto 0);
+            sp_out            : out std_logic_vector(31 downto 0)
         );
     end component;
 
     component mem_wb_forwarding is
-        generic (n : integer := 32);
         port(
             clk, rst          : in  std_logic;
             clk_en            : in  std_logic;
-            incremented_pc_in : in  std_logic_vector(n-1 downto 0);
-            in_port_in        : in  std_logic_vector(n-1 downto 0);
-            r_rsrc1_in        : in  std_logic_vector(n-1 downto 0);
-            r_rsrc2_in        : in  std_logic_vector(n-1 downto 0);
-            alu_result_in     : in  std_logic_vector(n-1 downto 0);
-            mem_data_in       : in  std_logic_vector(n-1 downto 0);
+            incremented_pc_in : in  std_logic_vector(31 downto 0);
+            in_port_in        : in  std_logic_vector(31 downto 0);
+            r_rsrc1_in        : in  std_logic_vector(31 downto 0);
+            r_rsrc2_in        : in  std_logic_vector(31 downto 0);
+            alu_result_in     : in  std_logic_vector(31 downto 0);
+            mem_data_in       : in  std_logic_vector(31 downto 0);
             rdst_in           : in  std_logic_vector(2 downto 0);
             rsrc1_in          : in  std_logic_vector(2 downto 0);
             output_enable_in  : in  std_logic;
@@ -380,12 +376,12 @@ architecture structural of processor is
             input_enable_in   : in  std_logic;
             reg_write_in      : in  std_logic;
             reg2_write_in     : in  std_logic;
-            incremented_pc_out: out std_logic_vector(n-1 downto 0);
-            in_port_out       : out std_logic_vector(n-1 downto 0);
-            r_rsrc1_out       : out std_logic_vector(n-1 downto 0);
-            r_rsrc2_out       : out std_logic_vector(n-1 downto 0);
-            alu_result_out    : out std_logic_vector(n-1 downto 0);
-            mem_data_out      : out std_logic_vector(n-1 downto 0);
+            incremented_pc_out: out std_logic_vector(31 downto 0);
+            in_port_out       : out std_logic_vector(31 downto 0);
+            r_rsrc1_out       : out std_logic_vector(31 downto 0);
+            r_rsrc2_out       : out std_logic_vector(31 downto 0);
+            alu_result_out    : out std_logic_vector(31 downto 0);
+            mem_data_out      : out std_logic_vector(31 downto 0);
             rdst_out          : out std_logic_vector(2 downto 0);
             rsrc1_out         : out std_logic_vector(2 downto 0);
             output_enable_out : out std_logic;
@@ -398,13 +394,12 @@ architecture structural of processor is
     end component;
 
     component writeback is
-        generic (n : integer := 32);
         port(
-            alu_result    : in  std_logic_vector(n-1 downto 0);
-            mem_data      : in  std_logic_vector(n-1 downto 0);
-            in_port       : in  std_logic_vector(n-1 downto 0);
-            r_rsrc1       : in  std_logic_vector(n-1 downto 0);
-            r_rsrc2       : in  std_logic_vector(n-1 downto 0);
+            alu_result    : in  std_logic_vector(31 downto 0);
+            mem_data      : in  std_logic_vector(31 downto 0);
+            in_port       : in  std_logic_vector(31 downto 0);
+            r_rsrc1       : in  std_logic_vector(31 downto 0);
+            r_rsrc2       : in  std_logic_vector(31 downto 0);
             rdst          : in  std_logic_vector(2 downto 0);
             rsrc1         : in  std_logic_vector(2 downto 0);
             output_enable : in  std_logic;
@@ -413,40 +408,44 @@ architecture structural of processor is
             reg_to_reg    : in  std_logic;
             reg_write     : in  std_logic;
             reg2_write    : in  std_logic;
-            out_port      : out std_logic_vector(n-1 downto 0);
-            write_data_1  : out std_logic_vector(n-1 downto 0);
+            out_port      : out std_logic_vector(31 downto 0);
+            write_data_1  : out std_logic_vector(31 downto 0);
             write_addr_1  : out std_logic_vector(2 downto 0);
             write_en_1    : out std_logic;
-            write_data_2  : out std_logic_vector(n-1 downto 0);
+            write_data_2  : out std_logic_vector(31 downto 0);
             write_addr_2  : out std_logic_vector(2 downto 0);
             write_en_2    : out std_logic;
-            wb_result     : out std_logic_vector(n-1 downto 0)
+            wb_result     : out std_logic_vector(31 downto 0)
         );
     end component;
 
     component hazard_unit is
-        port(
-            reset               : in  std_logic;
-            id_ex1_mem_read     : in  std_logic;
-            id_ex1_mem_write    : in  std_logic;
-            memread_q           : in  std_logic;
-            memwrite_q          : in  std_logic;
-            do_branch           : in  std_logic;
-            call_signal         : in  std_logic;
-            int_signal          : in  std_logic;
-            rst_if_id           : out std_logic;
-            rst_id_ex1          : out std_logic;
-            rst_ex1_ex2         : out std_logic;
-            rst_ex2_mem         : out std_logic;
-            rst_mem_wb          : out std_logic;
-            enable_if_id        : out std_logic;
-            enable_id_ex1       : out std_logic;
-            enable_ex1_ex2      : out std_logic;
-            enable_ex2_mem      : out std_logic;
-            enable_mem_wb       : out std_logic;
-            pc_enable           : out std_logic
-        );
-    end component;
+    port(
+        reset               : in  std_logic;
+        id_ex1_mem_read     : in  std_logic;
+        ex1_ex2_mem_read    : in  std_logic;
+        ex1_ex2_mem_write   : in  std_logic;
+        memread_q           : in  std_logic;
+        memwrite_q          : in  std_logic;
+        id_ex1_rd           : in  std_logic_vector(2 downto 0);
+        if_id_rs1           : in  std_logic_vector(2 downto 0);
+        if_id_rs2           : in  std_logic_vector(2 downto 0);
+        do_branch           : in  std_logic;
+        call_signal         : in  std_logic;
+        int_signal          : in  std_logic;
+        rst_if_id           : out std_logic;
+        rst_id_ex1          : out std_logic;
+        rst_ex1_ex2         : out std_logic;
+        rst_ex2_mem         : out std_logic;
+        rst_mem_wb          : out std_logic;
+        enable_if_id        : out std_logic;
+        enable_id_ex1       : out std_logic;
+        enable_ex1_ex2      : out std_logic;
+        enable_ex2_mem      : out std_logic;
+        enable_mem_wb       : out std_logic;
+        pc_enable           : out std_logic
+    );
+end component;
 
     component forwarding_unit is
         port(
@@ -676,6 +675,7 @@ architecture structural of processor is
     signal hz_enable_ex2_mem : std_logic;
     signal hz_enable_mem_wb  : std_logic;
     signal hz_pc_enable      : std_logic;
+    signal hz_id_ex1_rd  : std_logic_vector(2 downto 0);
 
     -- ── Forwarding unit outputs ───────────────────────────────────────────
     signal fwd_forward_a : std_logic_vector(1 downto 0);
@@ -985,7 +985,6 @@ begin
         );
 
     U_EX2: execute_2
-        generic map(n => 32)
         port map(
             rst         => global_rst,
             clk         => clk,
@@ -1002,7 +1001,6 @@ begin
         );
 
     U_EX2MEM_REG: ex2_mem_forwarding
-        generic map(n => 32)
         port map(
             clk               => clk,
             rst               => global_rst,
@@ -1054,7 +1052,6 @@ begin
         );
 
     U_MEM_STAGE: mem_stage
-        generic map(n => 32)
         port map(
             clk               => clk,
             rst               => global_rst,
@@ -1079,7 +1076,6 @@ begin
         );
 
     U_MEMWB_REG: mem_wb_forwarding
-        generic map(n => 32)
         port map(
             clk               => clk,
             rst               => global_rst,
@@ -1115,7 +1111,6 @@ begin
         );
 
     U_WB: writeback
-        generic map(n => 32)
         port map(
             alu_result    => memwb_alu_result_out,
             mem_data      => memwb_mem_data_out,
@@ -1142,26 +1137,30 @@ begin
 
     U_HAZARD: hazard_unit
         port map(
-            reset            => global_rst,
-            id_ex1_mem_read  => idex_mem_read_out,
-            id_ex1_mem_write => idex_mem_write_out,
-            memread_q        => ex2mem_mem_read_out,
-            memwrite_q       => ex2mem_mem_write_out,
-            do_branch        => ex2_pc_src,
-            call_signal      => call_sig,
-            int_signal       => int_sig,
-            rst_if_id        => hz_rst_if_id,
-            rst_id_ex1       => hz_rst_id_ex1,
-            rst_ex1_ex2      => hz_rst_ex1_ex2,
-            rst_ex2_mem      => hz_rst_ex2_mem,
-            rst_mem_wb       => hz_rst_mem_wb,
-            enable_if_id     => hz_enable_if_id,
-            enable_id_ex1    => hz_enable_id_ex1,
-            enable_ex1_ex2   => hz_enable_ex1_ex2,
-            enable_ex2_mem   => hz_enable_ex2_mem,
-            enable_mem_wb    => hz_enable_mem_wb,
-            pc_enable        => hz_pc_enable
-        );
+            reset             => global_rst,
+            id_ex1_mem_read   => idex_mem_read_out,
+            ex1_ex2_mem_read  => ex1ex2_mem_read_out,
+            ex1_ex2_mem_write => ex1ex2_mem_write_out,
+            memread_q         => ex2mem_mem_read_out,
+            memwrite_q        => ex2mem_mem_write_out,
+            id_ex1_rd         => idex_rd_out,
+            if_id_rs1         => dec_rs_out,
+            if_id_rs2         => dec_rt_out,
+            do_branch         => ex2_pc_src,
+            call_signal       => call_sig,
+            int_signal        => int_sig,
+            rst_if_id         => hz_rst_if_id,
+            rst_id_ex1        => hz_rst_id_ex1,
+            rst_ex1_ex2       => hz_rst_ex1_ex2,
+            rst_ex2_mem       => hz_rst_ex2_mem,
+            rst_mem_wb        => hz_rst_mem_wb,
+            enable_if_id      => hz_enable_if_id,
+            enable_id_ex1     => hz_enable_id_ex1,
+            enable_ex1_ex2    => hz_enable_ex1_ex2,
+            enable_ex2_mem    => hz_enable_ex2_mem,
+            enable_mem_wb     => hz_enable_mem_wb,
+            pc_enable         => hz_pc_enable
+    );
 
     U_FWD: forwarding_unit
         port map(

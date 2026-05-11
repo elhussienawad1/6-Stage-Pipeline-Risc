@@ -2,18 +2,17 @@ library ieee;
 use ieee.std_logic_1164.all;
 
 entity mem_wb_forwarding is
-    generic (n : integer := 32);
     port(
         clk, rst : in std_logic;
         clk_en   : in std_logic;
 
         -- data inputs
-        incremented_pc_in : in std_logic_vector(n-1 downto 0);
-        in_port_in        : in std_logic_vector(n-1 downto 0);
-        r_rsrc1_in        : in std_logic_vector(n-1 downto 0);
-        r_rsrc2_in        : in std_logic_vector(n-1 downto 0);
-        alu_result_in     : in std_logic_vector(n-1 downto 0);
-        mem_data_in       : in std_logic_vector(n-1 downto 0);
+        incremented_pc_in : in std_logic_vector(31 downto 0);
+        in_port_in        : in std_logic_vector(31 downto 0);
+        r_rsrc1_in        : in std_logic_vector(31 downto 0);
+        r_rsrc2_in        : in std_logic_vector(31 downto 0);
+        alu_result_in     : in std_logic_vector(31 downto 0);
+        mem_data_in       : in std_logic_vector(31 downto 0);
         rdst_in           : in std_logic_vector(2 downto 0);
         rsrc1_in          : in std_logic_vector(2 downto 0);
 
@@ -26,12 +25,12 @@ entity mem_wb_forwarding is
         reg2_write_in    : in std_logic;
 
         -- data outputs
-        incremented_pc_out : out std_logic_vector(n-1 downto 0);
-        in_port_out        : out std_logic_vector(n-1 downto 0);
-        r_rsrc1_out        : out std_logic_vector(n-1 downto 0);
-        r_rsrc2_out        : out std_logic_vector(n-1 downto 0);
-        alu_result_out     : out std_logic_vector(n-1 downto 0);
-        mem_data_out       : out std_logic_vector(n-1 downto 0);
+        incremented_pc_out : out std_logic_vector(31 downto 0);
+        in_port_out        : out std_logic_vector(31 downto 0);
+        r_rsrc1_out        : out std_logic_vector(31 downto 0);
+        r_rsrc2_out        : out std_logic_vector(31 downto 0);
+        alu_result_out     : out std_logic_vector(31 downto 0);
+        mem_data_out       : out std_logic_vector(31 downto 0);
         rdst_out           : out std_logic_vector(2 downto 0);
         rsrc1_out          : out std_logic_vector(2 downto 0);
 

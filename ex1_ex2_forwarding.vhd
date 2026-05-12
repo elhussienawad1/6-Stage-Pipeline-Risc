@@ -104,6 +104,7 @@ begin
             reg_write_out    <= '0';
         elsif rising_edge(clk) then
             if flush = '1' then
+                -- bubble: pass data through for forwarding, zero all control signals
                 incremented_pc_out <= incremented_pc_in;
                 pc_out             <= pc_in;
                 in_port_out        <= in_port_in;
@@ -113,9 +114,9 @@ begin
                 r_rsrc2_out        <= r_rsrc2_in;
                 alu_result_out     <= alu_result_in;
                 imm_out            <= imm_in;
-                zero_out           <= '0';
-                negative_out       <= '0';
-                carry_out          <= '0';
+                zero_out           <= zero_in;
+                negative_out       <= negative_in;
+                carry_out          <= carry;
                 branch_type_out    <= (others => '0');
                 branch_out         <= '0';
                 inc_sp_out         <= '0';
@@ -129,9 +130,8 @@ begin
                 reg_to_reg_out     <= '0';
                 input_enable_out   <= '0';
                 reg_write_out      <= '0';
-                zero_out           <= zero_in;
-                negative_out       <= negative_in;
-                carry_out          <= carry;
+            elsif clk_en = '1' then
+                -- normal propagation
                 incremented_pc_out <= incremented_pc_in;
                 pc_out             <= pc_in;
                 in_port_out        <= in_port_in;
@@ -139,8 +139,17 @@ begin
                 rsrc1_out          <= rsrc1_in;
                 r_rsrc1_out        <= r_rsrc1_in;
                 r_rsrc2_out        <= r_rsrc2_in;
-                alu_result_out     <= alu_result_in;
+                -- IN instructions don't compute via the ALU, so forwarding
+                -- from this stage must deliver in_port instead of garbage.
+                if input_enable_in = '1' then
+                    alu_result_out <= in_port_in;
+                else
+                    alu_result_out <= alu_result_in;
+                end if;
                 imm_out            <= imm_in;
+                zero_out           <= zero_in;
+                negative_out       <= negative_in;
+                carry_out          <= carry;
                 branch_type_out    <= branch_type_in;
                 branch_out         <= branch_in;
                 inc_sp_out         <= inc_sp_in;

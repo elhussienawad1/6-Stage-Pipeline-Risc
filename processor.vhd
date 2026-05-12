@@ -246,6 +246,7 @@ architecture structural of processor is
             mem_to_reg_in     : in  std_logic;
             reg_to_reg_in     : in  std_logic;
             input_enable_in   : in  std_logic;
+            reg_write_in      : in  std_logic;
             incremented_pc_out: out std_logic_vector(n-1 downto 0);
             pc_out            : out std_logic_vector(n-1 downto 0);
             in_port_out       : out std_logic_vector(n-1 downto 0);
@@ -266,7 +267,8 @@ architecture structural of processor is
             output_enable_out : out std_logic;
             mem_to_reg_out    : out std_logic;
             reg_to_reg_out    : out std_logic;
-            input_enable_out  : out std_logic
+            input_enable_out  : out std_logic;
+            reg_write_out     : out std_logic
         );
     end component;
 
@@ -607,6 +609,7 @@ end component;
     signal ex1ex2_mem_to_reg_out     : std_logic;
     signal ex1ex2_reg_to_reg_out     : std_logic;
     signal ex1ex2_input_enable_out   : std_logic;
+    signal ex1ex2_reg_write_out      : std_logic;
 
     -- ── Execute_2 outputs ─────────────────────────────────────────────────
     signal ex2_pc_src  : std_logic;
@@ -655,13 +658,14 @@ end component;
     signal memwb_reg2_write_out     : std_logic;
 
     -- ── Writeback outputs ─────────────────────────────────────────────────
-    signal wb_write_data_1 : std_logic_vector(31 downto 0);
-    signal wb_write_addr_1 : std_logic_vector(2 downto 0);
-    signal wb_write_en_1   : std_logic;
-    signal wb_write_data_2 : std_logic_vector(31 downto 0);
-    signal wb_write_addr_2 : std_logic_vector(2 downto 0);
-    signal wb_write_en_2   : std_logic;
-    signal wb_result       : std_logic_vector(31 downto 0);
+    signal wb_write_data_1   : std_logic_vector(31 downto 0);
+    signal wb_write_addr_1   : std_logic_vector(2 downto 0);
+    signal wb_write_en_1     : std_logic;
+    signal wb_write_data_2   : std_logic_vector(31 downto 0);
+    signal wb_write_addr_2   : std_logic_vector(2 downto 0);
+    signal wb_write_en_2     : std_logic;
+    signal wb_result         : std_logic_vector(31 downto 0);
+    signal wb_out_port_comb  : std_logic_vector(31 downto 0);
 
     -- ── Hazard unit outputs ───────────────────────────────────────────────
     signal hz_rst_if_id      : std_logic;
@@ -715,7 +719,7 @@ begin
     --── Component instantiations ──────────────────────────────────────────
 
     U_MEMORY: reg_file_memory
-        generic map(N => 32, M => 1024)
+        generic map(N => 32, M => 4096)
         port map(
             clk                 => clk,
             rst                 => global_rst,
@@ -961,6 +965,7 @@ begin
             mem_to_reg_in     => idex_mem_to_reg_out,
             reg_to_reg_in     => idex_reg_to_reg_out,
             input_enable_in   => idex_input_enable_out,
+            reg_write_in      => idex_reg1_write_out,
             incremented_pc_out=> ex1ex2_incremented_pc_out,
             pc_out            => ex1ex2_pc_out,
             in_port_out       => ex1ex2_in_port_out,
@@ -981,7 +986,8 @@ begin
             output_enable_out => ex1ex2_output_enable_out,
             mem_to_reg_out    => ex1ex2_mem_to_reg_out,
             reg_to_reg_out    => ex1ex2_reg_to_reg_out,
-            input_enable_out  => ex1ex2_input_enable_out
+            input_enable_out  => ex1ex2_input_enable_out,
+            reg_write_out     => ex1ex2_reg_write_out
         );
 
     U_EX2: execute_2
@@ -1125,7 +1131,7 @@ begin
             reg_to_reg    => memwb_reg_to_reg_out,
             reg_write     => memwb_reg_write_out,
             reg2_write    => memwb_reg2_write_out,
-            out_port      => output_port,
+            out_port      => wb_out_port_comb,
             write_data_1  => wb_write_data_1,
             write_addr_1  => wb_write_addr_1,
             write_en_1    => wb_write_en_1,
@@ -1134,6 +1140,18 @@ begin
             write_en_2    => wb_write_en_2,
             wb_result     => wb_result
         );
+
+    -- Latch output_port: only update when an OUT instruction is in WB
+    out_port_latch: process(clk, global_rst)
+    begin
+        if global_rst = '1' then
+            output_port <= (others => '0');
+        elsif rising_edge(clk) then
+            if memwb_output_enable_out = '1' then
+                output_port <= wb_out_port_comb;
+            end if;
+        end if;
+    end process;
 
     U_HAZARD: hazard_unit
         port map(
@@ -1165,8 +1183,9 @@ begin
     U_FWD: forwarding_unit
         port map(
             mem_wb_regwrite  => memwb_reg_write_out,
-            -- ex1_ex2_forwarding does not carry reg_write; use idex value (1-cycle approx)
-            ex1_ex2_regwrite => idex_reg1_write_out,
+            -- ex1_ex2_regwrite now properly uses the registered reg_write
+            -- carried by ex1_ex2_forwarding (one-cycle delayed = EX1/EX2 stage)
+            ex1_ex2_regwrite => ex1ex2_reg_write_out,
             ex2_mem_regwrite => ex2mem_reg_write_out,
             mem_wb_rdst      => memwb_rdst_out,
             id_ex1_rs1       => idex_rs_out,

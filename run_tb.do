@@ -13,7 +13,7 @@ vlib work
 vmap work work
 
 # ── 2. Compile all design files (order: primitives first) ─────────────────────
-set src_dir [file dirname [info script]]
+set src_dir [pwd]
 
 proc vcom_file { f } {
     upvar src_dir d

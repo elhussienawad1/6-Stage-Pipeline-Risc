@@ -5,7 +5,7 @@ use std.textio.all;
 use ieee.std_logic_textio.all;
 
 entity reg_file_memory is
-    generic( N: integer := 32; M: integer := 1024 );
+    generic( N: integer := 32; M: integer := 4096 );
     port(
         clk, rst : in std_logic;
         address, instruction_address  : in std_logic_vector(31 downto 0);
@@ -22,7 +22,7 @@ end reg_file_memory;
 
 architecture structure of reg_file_memory is
 
-    -- 1024 * 4 bytes = 4KB    
+    -- 4096 * 4 bytes = 16KB (addresses 0x000..0xFFF; SP resets to 0xFFF)
     type mem_array is array (0 to M-1) of std_logic_vector(N-1 downto 0);
     -- Function to initialize memory from file (simulation only)
     impure function init_memory_from_file(filename : string) return mem_array is
@@ -46,48 +46,35 @@ architecture structure of reg_file_memory is
         return memory;
     end function;
     -- Initialize memory using the function
-    signal memory : mem_array := init_memory_from_file("./6-Stage-Pipeline-Risc/test.mem");
+    signal memory : mem_array := init_memory_from_file("./test.mem");
     signal readdata, instruction : std_logic_vector(N-1 downto 0);
-    signal internal_memory_busy : std_logic;
 begin
+    -- Synchronous write only; reads are combinatorial (SRAM-like)
     process(clk, rst)
-        variable access_conflict : boolean;
     begin
         if rst = '1' then
-            internal_memory_busy <= '0';
-         elsif rising_edge(clk) then
-            -- Check for memory access conflict
-            access_conflict := false;
-            
-            -- Data memory access requested
-            if mem_write = '1' or mem_read = '1' then
-                -- Instruction fetch always happens (PC is always reading)
-                -- In Von Neumann, both can't access memory simultaneously
-                access_conflict := true;
-            end if;
-            
-            if access_conflict then
-                internal_memory_busy <= '1';
-                -- Priority: data memory access over instruction fetch
-                if mem_write = '1' then
-                    memory(to_integer(unsigned(address(11 downto 0)))) <= writedata;
-                end if;
-                -- If mem_read = '1', readdata will be available next cycle
-            else
-                internal_memory_busy <= '0';
+            null;  -- no registers to reset
+        elsif rising_edge(clk) then
+            -- Unconditional write on clock edge when write-enable is asserted
+            if mem_write = '1' then
+                memory(to_integer(unsigned(address(11 downto 0)))) <= writedata;
             end if;
         end if;
     end process;
-   readdata <= memory(to_integer(unsigned(address(11 downto 0)))) when mem_read = '1' 
-                else (others => '0');
-    
+
+    -- Combinatorial reads: available in the same cycle (no latency)
+    readdata    <= memory(to_integer(unsigned(address(11 downto 0)))) when mem_read = '1'
+                   else (others => '0');
     instruction <= memory(to_integer(unsigned(instruction_address(11 downto 0))));
-    
+
+    -- Assert memory_busy combinatorially so the fetch stage is stalled
+    -- in the SAME cycle as the data write (Von Neumann structural hazard).
+    -- Pure data reads alongside instruction fetch are safe (two reads, no conflict).
+    memory_busy <= '1' when mem_write = '1' else '0';
+
     -- Output selection
-    mem_output <= readdata when mem_read = '1' 
+    mem_output <= readdata when mem_read = '1'
                   else instruction;
-    
-    memory_busy <= internal_memory_busy;
     mem1 <= memory(0);
     mem2 <= memory(1);
     mem3<= memory(2);

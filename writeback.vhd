@@ -63,8 +63,9 @@ begin
     write_addr_2 <= rsrc1;
     write_en_2   <= reg2_write;
 
-    -- OUT instruction outputs r_rsrc1 (the source register value)
-    out_port <= r_rsrc1;
+    -- OUT instruction outputs the forwarded ALU result (alu_result = Rsrc
+    -- computed in EX1 with full forwarding, not stale decode-time r_rsrc1).
+    out_port <= alu_result;
 
     -- result seen by forwarding unit
     wb_result <= wd1;

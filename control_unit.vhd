@@ -158,8 +158,12 @@ begin
                 inc_pc      <= '1';
 
             -- ── OUT Rsrc ─────────────────────────────────────────────────
+            -- alu_op=ADD (001) + alu_src=imm(0) passes Rsrc through ALU so
+            -- that forwarding in EX1 works and alu_result = forwarded Rsrc.
             when OUT_op =>
                 output_enable <= '1';
+                alu_op        <= "001";
+                alu_src       <= '1';  -- imm=0, so result = Rsrc + 0 = Rsrc
                 inc_pc        <= '1';
 
             -- ── IN Rdst ──────────────────────────────────────────────────
